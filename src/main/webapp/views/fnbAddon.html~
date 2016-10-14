@@ -1,0 +1,268 @@
+<div class="container">
+
+<div class="row">
+	<div class="col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 col-xs-14 col-sm-14 col-md-10 col-lg-10" name="roomNumberSearchForm">
+		<div class="col-xs-14 col-sm-14 col-md-14 col-lg-14 align-center">
+			<div class="input-group" ng-init="getAllCheckedInRooms()">
+				<div class="input-group-addon" style="width:40%;">
+					Search by Room number:
+				</div>
+				<input type="text" class="form-control" ng-focus="name for name in roomNumbers"
+					ng-model="selectedRoomNumber" 
+					ng-enter="searchReservationsByRoomNumber(selectedRoomNumber)" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" 
+						ng-click="searchReservationsByRoomNumber(selectedRoomNumber)">Go!</button>
+				</span>
+			</div>
+		</div>		
+	</div>
+</div>
+
+<div style="margin-top:15px"></div>
+
+<div class="row">
+<div class="table-responsive panel panel-default">
+<table class="table table-bordered table-hover">
+<thead>
+	<tr class="info">
+	<th class="hidden-xs text-align-center">
+		<span class="link" ng-click="orderByField='bookingId'; ascendingSort = !ascendingSort">
+			<span>Booking ID&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'bookingId')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'bookingId' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'bookingId' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="">
+		<span class="link" ng-click="orderByField='product'; ascendingSort = !ascendingSort">
+			<span>Room Type&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'product')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'product' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'product' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="">
+		<span class="link" ng-click="orderByField='checkIn'; ascendingSort = !ascendingSort">
+			<span>Check-in&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'checkIn')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'checkIn' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'checkIn' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="hidden-xs">
+		<span class="link" ng-click="orderByField='checkOut'; ascendingSort = !ascendingSort">
+			<span>Check-out&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'checkOut')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'checkOut' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'checkOut' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="">
+		<span class="link" ng-click="orderByField='booker'; ascendingSort = !ascendingSort">
+			<span>Booker&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'booker')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'booker' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'booker' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="hidden-xs hidden-sm">
+		<span class="link" ng-click="orderByField='guest'; ascendingSort = !ascendingSort">
+			<span>Guest&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'guest')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'guest' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'guest' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	<th class="hidden-xs hidden-sm">
+		<span class="link" ng-click="orderByField='status'; ascendingSort = !ascendingSort">
+			<span>Status&nbsp;</span>
+			<span>
+				<span class="glyphicon glyphicon-sort"
+					ng-show="! (orderByField == 'status')"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet"
+					ng-show="orderByField == 'status' && ascendingSort"></span>
+				<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+					ng-show="orderByField == 'status' && !ascendingSort"></span>
+			</span>
+		</span>
+	</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-show="reservationList.length < 1"><td colspan="8" style="text-align:center">Ugh.. no match found.</td></tr>
+	<tr ng-repeat="reservation in reservationList | orderBy:orderByField:!ascendingSort | filter:search"
+		ng-class="{'danger': reservation.lineState=='cancelled', 'success': reservation.lineState=='active', 'active': active==reservation}"
+		class="reservationRow link"
+		ng-click="activateBookingAndLoadExpenseDiv(reservation)">
+		<td class="hidden-xs text-align-center">{{reservation.bookingId}}</td>
+		<td>{{reservation.product}}</td>
+		<td>{{reservation.checkIn | cmdate:'ddd, DD MMM'}}</td>
+		<td class="hidden-xs">{{reservation.checkOut | cmdateIncrement:'ddd, DD MMM'}}</td>
+		<td>{{reservation.booker}}</td>
+		<td class="hidden-xs hidden-sm">{{reservation.guest}}</td>
+		<td class="hidden-xs hidden-sm">{{reservation.status | uiStatus}}</td>
+	</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<div style="margin:25px 0px"></div>
+
+<!-- expense panel starts -->
+<div class="row expensiveDiv" ng-show="showExpenseDiv">
+
+	<div class="col-xs-14 col-sm-14 col-md-14 col-lg-14" name="expenseForm">
+		<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2 align-center"></div>
+		<div class="col-xs-14 col-sm-14 col-md-10 col-lg-10 align-center">
+
+
+<div class="panel panel-default">
+	<div class="panel-heading clearfix" style="background-color:#4FACB5; color:#fff;">
+		<i class="icon-calendar"></i>
+		<h3 class="panel-title">
+			F&B expense details
+			<!-- <i class="pull-right" style="font-weight:100;" ng-class="{'hideAddedMessage': !isDataAdded()}">{{addDataStatus}}</i> -->
+		</h3>
+		<span class="pull-right" ng-hide="!expense.isBTC" style="color:red;" >BTC Reservation {{chargeMessage}}</span>
+	</div>
+       
+        <div class="panel-body">
+		<form class="form-horizontal" role="form" ng-submit="submitFnbAddon(expense)">
+			<fieldset ng-disabled="busy">
+			<div class="form-group">
+				<label for="bookingId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Booking ID : </label>
+				<div class="col-xs-10 col-sm-10 col-md-4 col-lg-4">
+					<input type="text" class="form-control" id="bookingId" placeholder="" required="true" ng-disabled="true" ng-model="expense.bookingId">
+					<span ng-show="form.size.$error.required">
+						Please select booking first!
+					</span>
+				</div>
+				<label for="roomNumber" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Room : </label>
+				<div class="col-xs-10 col-sm-10 col-md-4 col-lg-4">
+					<input type="text" class="form-control" id="roomNumber" placeholder="" required="true" ng-disabled="true" ng-model="expense.roomNumber">
+					<span ng-show="form.size.$error.required">
+						Please select booking first!
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="booker" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Booker : </label>
+				<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<input type="text" class="form-control" id="booker" placeholder="" required="true" ng-disabled="true" ng-model="expense.booker">
+					<span ng-show="form.size.$error.required">
+						Please select reservation first!
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="checkNo" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Check No : </label>
+				<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<input type="text" class="form-control" id="checkNo" placeholder="" required="true" ng-model="expense.checkNumber">
+					<span ng-show="form.size.$error.required">
+						Please enter check number!
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="amount" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Amount : </label>
+				<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<input type="number" class="form-control" id="amount" placeholder="" min="1" max="10000"  required="true"  ng-model="expense.amount">
+					<span ng-show="form.size.$error.required">
+						Please enter an amount!
+					</span>
+					<span ng-show="form.size.$error.min || form.size.$error.max">
+						The value must be in range 1 to 10,000!
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="extraInfo" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Extra Info : </label>
+				<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<textarea class="form-control" rows="3" id="extraInfo" ng-model="expense.extraInfo"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-3 col-lg-offset-3 col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<button type="submit" class="btn btn-danger pull-right">Submit</button>
+				</div>
+			</div>
+			</fieldset>
+		</form>
+	</div>
+
+</div>
+<!-- expense panel ends -->
+
+
+
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2 align-center"></div>
+	</div>
+</div>
+
+
+<!-- addons starts-->
+<div class="row top-buffer" ng-show="booking">
+<div class="table-responsive panel panel-default">
+<table class="table table-bordered table-hover table-condensed">
+<thead>
+	<tr class="active">
+		<th colspan="4">Charges for : {{booking.bookingId}}</th>
+	</tr>
+	<tr class="info">
+		<th>Product</th>
+		<th>Info</th>
+		<th>Note</th>
+		<th class="alignRight">Charge</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-show="booking.addons.length < 1"><td colspan="4" style="text-align:center">No charges found.</td></tr>
+	<tr ng-repeat="addon in booking.addons" ng-hide="addon.productCode != expenseCode"
+		ng-class="{'danger':addon.lineState != 'active', 'success':addon.lineState == 'active'}">
+		<td>{{addon.productName}}</td>
+		<td>{{addon.info}}</td>
+		<td>{{addon.externalNote}}</td>
+		<td class="alignRight">{{addon.charge | currency:"&#x20B9; ":2}}</td>
+	</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- addons end-->
+
+</div>

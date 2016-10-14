@@ -1,0 +1,16 @@
+<link rel="stylesheet" type="text/css" href="styles/propertyList.css">
+
+<div class="container-fluid">
+	<div class="row top-buffer">
+		<div class="propertyList col-xs-14 col-sm-14 col-md-14 col-lg-14">
+			<div ng-repeat="inventoryStore in data.inventoryStore" ng-click="fire(inventoryStore)" class="indvProperty col-xs-7 col-sm-2 col-md-2 col-lg-2">
+				<div class="indvProperty-image">
+				<img src="{{inventoryStore.propertyRef.imageUrl}}" style="border-radius:4px; overflow:hidden;"/>
+				</div>
+				<div class="indvProperty-name">
+					{{inventoryStore.propertyRef.name}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

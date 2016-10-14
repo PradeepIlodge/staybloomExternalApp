@@ -1,0 +1,74 @@
+/* fix for boxes in reservation view begin */
+.fixedSizeH1 {
+  font-size: 63px;
+}
+.dl-horizontal dt {
+  float: left;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* fix for boxes in reservation view end */
+
+.squareCard {
+  height:122px;
+  overflow: auto;
+  border-radius: 4px;
+  border:1px solid #1D6C81;
+  color: #FFFFFF;
+}
+.squareCard-red {
+  line-height:10px;
+  background-color:#4FACB5;
+}
+.squareCard-blue {
+  padding:17px 0;
+  font-size:15px;
+  line-height:80px;
+  background-color:#1D6C81;
+}
+.dl-horizontal {
+  margin-bottom:0;
+}
+.dl-horizontal dt{
+  width: 46%;
+  margin-right:0;
+}
+.dl-horizontal dd{
+  margin-left:46%;
+  max-width:64%;
+}
+
+.xycenter {
+  text-align:center;
+  vertical-align:middle;
+}
+
+.showPrintOnly {
+	display:none;
+}
+
+@media print {
+	.squareCard {
+		min-height:122px;
+		height:auto;
+	}
+	.dl-horizontal dt{
+		width: 50%;
+	}
+	.showPrintOnly {
+		display: block;
+	}
+}
+
+@media (max-width:991px) {
+	.squareCard {
+		min-height:122px;
+		height:auto;
+	}
+	.dl-horizontal dt{
+		width: 50%;
+	}
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>iLodge</title>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+<script src="assets/jquery/jquery-2.1.3.min.js"></script>
+<script src="assets/angularjs/angular.min.js"></script>
+<script src="assets/angularjs/angular-animate.min.js"></script>
+<script src="assets/angularjs/angular-route.min.js"></script>
+<script src="assets/angularjs/angular-cookies.min.js"></script>
+<script src="assets/underscore/underscore-min.js"></script>
+<script src="assets/uibootstraptpls/ui-bootstrap-tpls-0.10.0.js"></script>
+<script src="assets/uirouter/angular-ui-router.js"></script>
+<script src="assets/bootstrap/js/bootstrap.js"></script>
+<script src="assets/loadingbar/loading-bar.js"></script>
+<script src="assets/moment/moment.js"></script>
+<script src="assets/d3/d3.min.js"></script>
+<script src="assets/filesaver/file-saver.js"></script>
+
+<script src="scripts/scriptmain.js"></script>
+
+<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="assets/loadingbar/loading-bar.css">
+<link rel="stylesheet" type="text/css" href="styles/stylemain.css">
+</head>
+<body>
+
+<div class="god" ng-app="staybloomExternalApp">
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ilodge-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="glyphicon glyphicon-menu-hamburger" style="color:white"></span>
+	      </button>
+	      <a class="navbar-brand" href="#/">
+	        <img class="logo-navbar" alt="iLodge" src="assets/images/logoILodge.png">
+	      </a>
+	    </div>
+	
+	    
+		<div class="collapse navbar-collapse" id="ilodge-navbar-collapse-1" ng-controller="headerController">
+			<ul class="nav navbar-nav">
+				<li ng-class="{'hide' : !isPropertySet(), 'active' : $route.current.activetab == 'dashboard'}">
+					<a href="#/externalAppTypes" title="Ctrl + D"
+						ng-shortcut="'ctrl+d'" ng-shortcut-click>&nbsp;&nbsp;App Menu&nbsp;&nbsp;</a>
+				</li>
+				
+				<li ng-class="{'hide' : !isPropertySet(), 'active' : $route.current.activetab != 'dashboard'}"
+					ng-controller="roomTypesController" ng-show="$root.isExternalAppVisible">
+					<a href="#/getApplicationView/{{externalAppName}}" title="Ctrl + I"
+						ng-shortcut-click disabled>&nbsp;&nbsp;{{externalAppName}}&nbsp;&nbsp;</a>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown" ng-class="{'hide' : !isPropertySet()}">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						&nbsp;&nbsp;{{propertyName}}&nbsp;&nbsp;<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu" style="padding:0;">
+						<li>
+							<a href="" ng-click="logout()" style="padding:10px 20px;">
+								<span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout&nbsp;&nbsp;
+							</a>
+						</li>
+						<li class="divider" style="margin:0;"></li>
+						<li>
+							<a href="" ng-click="reloadRoute()" style="padding:10px 20px;">
+								<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh&nbsp;&nbsp;
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+<!--
+	      <div class="navbar-form navbar-right" name="reservationSearchForm" ng-controller="getReservationController">
+                <div class="col-md-14">
+                  <div class="input-group" ng-class="{'hide' : !isPropertySet()}">
+                    <span class="input-group-addon">
+                      <input type="checkbox">
+                    </span>
+                    <input type="text" class="form-control" ng-model="resId" placeholder="Search with booking ID">
+                    <span class="input-group-btn">
+	              <button class="btn btn-default" type="button" ng-click="redirectToReservation()">go!</button>
+                    </span>
+                  </div>
+                </div>
+	      </div>
+-->
+
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+
+<!-- Modal -->
+<div id="rootModal" class="modal fade" role="dialog" ng-controller="rootModalController">
+	<div class="modal-dialog modal-sm">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{modalData.header}}</h4>
+			</div>
+			<div class="modal-body">
+				<p>{{modalData.body}}</p>
+			</div>
+			<div class="modal-footer" ng-controller="headerController">
+				<button ng-show="modalData.refreshEnable" ng-click="reloadRoute()" class="btn btn-danger-ilodge" data-dismiss="modal">Refresh</button>
+				<button type="button" class="btn btn-primary-ilodge" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="jumbotron">
+	<div class="row">
+		<div class="col-xs-0  col-sm-0  col-md-1 col-xl-2"></div>
+		<div class="col-xs-14 col-sm-14 col-md-12 col-xl-10">
+			<div ng-view="" style="min-height:500px;"></div><!--class="slide-animation" -->
+		</div>
+		<div class="col-xs-0  col-sm-0  col-md-1 col-xl-2"></div>
+	</div>
+</div>
+
+
+</div>
+
+<script src="app.js"></script>
+
+<!-- factories start -->
+<script src="factories/authInterceptorFactory.js"></script>
+<script src="factories/httpInterceptorFactory.js"></script>
+<script src="factories/reservationFactory.js"></script>
+<script src="factories/reservationListFactory.js"></script>
+<script src="factories/roomTypeFactory.js"></script>
+<script src="factories/availabilityAndPriceFactory.js"></script>
+<script src="factories/propertyListFactory.js"></script>
+<script src="factories/shortcutFactory.js"></script>
+<script src="factories/occupancyFactory.js"></script>
+<script src="factories/pdfFactory.js"></script>
+<script src="factories/externalAppListFactory.js"></script>
+<script src="factories/fnbAddonFactory.js"></script>
+<script src="factories/loyaltyVoucherFactory.js"></script>
+<script src="factories/roomListFactory.js"></script>
+<script src="factories/exportReservationListFactory.js"></script>
+<script src="factories/exportLoyaltyReportFactory.js"></script>
+<!-- factories   end -->
+
+<!-- controllers start -->
+<script src="controllers/rootModalController.js"></script>
+<script src="controllers/authController.js"></script>
+<script src="controllers/roomTypesController.js"></script>
+<script src="controllers/headerController.js"></script>
+<script src="controllers/availabilityAndPriceController.js"></script>
+<script src="controllers/updateProductController.js"></script>
+<script src="controllers/propertyListController.js"></script>
+<script src="controllers/propertyController.js"></script>
+<script src="controllers/productivityReportController.js"></script>
+<script src="controllers/externalAppListController.js"></script>
+<script src="controllers/fnbAddonController.js"></script>
+<script src="controllers/loyaltyVoucherController.js"></script>
+<script src="controllers/loyaltyReportController.js"></script>
+<!-- controllers   end -->
+
+<!-- directives start -->
+<script src="directives/shortcutDirective.js"></script>
+<script src="directives/enterDirective.js"></script>
+<!-- directives   end -->
+
+<!-- filters start -->
+<script src="filters/commonFilter.js"></script>
+<!-- filters   end -->
+
+
+
+</body>
+</html>

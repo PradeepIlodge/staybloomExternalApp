@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="styles/externalAppsList.css">
+
+<div class="container-fluid">
+	<div class="row top-buffer">
+		<div class="propertyList col-xs-14 col-sm-14 col-md-14 col-lg-14">
+			<div ng-repeat="(key, value) in data" ng-disabled="value===0"  class="indvProperty col-xs-7 col-sm-2 col-md-2 col-lg-2" >
+				
+				<div ng-if="value === 1">
+					<div ng-click="fire(key)">
+						<div class="indvProperty-image">
+							<div class="indvProperty-name">
+								{{key}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div ng-if="value === 0" ng-class="{'disable': value === 0}">
+					<div class="indvProperty-image">
+						<div class="indvProperty-name">
+							{{key}}
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

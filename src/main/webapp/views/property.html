@@ -1,0 +1,9 @@
+
+<div style="position:fixed; top:50px; left:0; z-index:0">individual property page</div>
+<div z-index:100"class="container-fluid">
+	<div class="row top-buffer">
+		{{message.propertyRef.name}} - {{message.propertyRef.align}} - {{message.id}}<br>
+		<ol><li ng-repeat="user in message.users">{{user}}</li></ol>
+	</div>
+</div>
+

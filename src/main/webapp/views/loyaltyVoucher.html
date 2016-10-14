@@ -1,0 +1,135 @@
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<i class="icon-calendar"></i>
+		<h3 class="panel-title">Add Gift Voucher </h3>
+	</div>
+<div class="panel-body">
+	<form class="form-horizontal" role="form" ng-submit="addLoyaltyVoucher(loyaltyData)">
+		<div class="form-group">
+			<label for="profileId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Profile ID : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="profileId" placeholder="" required="true"
+						ng-model="loyaltyData.profileId">
+				<span ng-show="form.size.$error.required">
+					Please enter profile id!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="voucherTag" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Voucher Tag : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="voucherTag" placeholder="" required="true"
+						ng-model="loyaltyData.voucherTag">
+				<span ng-show="form.size.$error.required">
+					Please enter voucher tag!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Description : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<textarea class="form-control" rows="3" id="description" ng-model="loyaltyData.description"></textarea>
+				<span ng-show="form.size.$error.required">
+					Please enter description!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="profileId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Validity : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="checkbox" id="valid" class="form-control large" value="valid" ng-model="loyaltyData.valid"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="voucherPoints" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Points : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="voucherPoints" placeholder="" required="true"
+						ng-model="loyaltyData.voucherPoints">
+				<span ng-show="form.size.$error.required">
+					Please enter voucher points!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+				<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-3 col-lg-offset-3 col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<!-- <button class="btn btn-default" type="button" ng-click="isProfileExists(profileId)">Add</button> -->
+					<button type="submit" class="btn btn-danger pull-right">Submit</button>
+				</div>
+			</div>
+	</form>
+</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<i class="icon-calendar"></i>
+		<h3 class="panel-title">Update Gift Voucher </h3>
+	</div>
+<div class="panel-body">
+	<form class="form-horizontal" role="form" ng-submit="updateLoyaltyVoucherData(updateLoyaltyVoucher)">
+		<div class="form-group">
+			<label for="voucherId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Voucher ID : </label>
+			<div class="col-xs-6 col-sm-6 col-md-9 col-lg-9">
+				<input type="text" class="form-control" id="voucherId" placeholder="" required="true" ng-model="updateLoyaltyVoucher.voucherId">
+				<span ng-show="form.size.$error.required">
+					Please enter voucher id!
+				</span>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+					<button class="btn btn-default" type="button" ng-click="checkLoyaltyVoucher(updateLoyaltyVoucher.voucherId)">Check!</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="profileId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Profile ID : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="profileId" placeholder="" required="true"
+						ng-model="updateLoyaltyVoucher.profileId">
+				<span ng-show="form.size.$error.required">
+					Please enter profile id!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="voucherTag" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Voucher Tag : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="voucherTag" placeholder="" required="true"
+						ng-model="updateLoyaltyVoucher.voucherTag">
+				<span ng-show="form.size.$error.required">
+					Please enter voucher tag!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Description : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<textarea class="form-control" rows="3" id="description" ng-model="updateLoyaltyVoucher.description"></textarea>
+				<span ng-show="form.size.$error.required">
+					Please enter description!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="profileId" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Validity : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="checkbox" id="valid" class="form-control large" value="valid" ng-model="updateLoyaltyVoucher.valid"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="voucherPoints" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Points : </label>
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<input type="text" class="form-control" id="voucherPoints" placeholder="" required="true"
+						ng-model="updateLoyaltyVoucher.voucherPoints">
+				<span ng-show="form.size.$error.required">
+					Please enter voucher points!
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+				<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-3 col-lg-offset-3 col-xs-10 col-sm-10 col-md-11 col-lg-11">
+					<!-- <button class="btn btn-default" type="button" ng-click="isProfileExists(profileId)">Add</button> -->
+					<button type="submit" class="btn btn-danger pull-right">Submit</button>
+				</div>
+			</div>
+	</form>
+</div>
+</div>

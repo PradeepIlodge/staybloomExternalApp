@@ -1,0 +1,38 @@
+
+.propertyList {
+	padding: 10px;
+	background-color: #ffffff;
+	border-radius: 4px;
+}
+
+.indvProperty {
+	text-align: center;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.indvProperty:hover {
+	background-color: #1D6C81;
+	cursor: pointer;
+}
+
+.indvProperty-image {
+	border-radius: 4px 4px 0 0;
+	overflow: hidden;
+	padding: 0;
+	height: 140px;
+	background-color: #FCFCFC;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
+.indvProperty-name {
+	color: #4FACB5;
+	font-weight: 800;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	border-radius: 0 0 4px 4px;
+	padding: 0;
+	background-color: #FCFCFC;
+}

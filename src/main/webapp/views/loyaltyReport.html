@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+<link rel="stylesheet" type="text/css" href="styles/inventory.css">
+
+<div class="row top-buffer"></div>
+
+<div class="row">
+	<div class="col-sm-14">
+		<div class="form-inline col-xs-14 col-sm-14 col-md-14 col-lg-14 align-center">
+			<div class="col-xs-14 col-sm-14 col-md-14 col-lg-14 align-center">
+				<div class="input-group date dateRangePicker hackyhackForDateBox">
+					<div class="input-group-addon pointer" style="width:40%;">
+						Loyalty Info for:
+					</div>
+					<input type="text" class="form-control" ng-model="profileName" disabled/>
+				</div>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primary" ng-click="loadAdrLines(data)">ADR Graph</button>
+					<button type="button" class="btn btn-primary" ng-click="loadNightsLines(data)">Month Nights Graph</button>
+					<button type="button" class="btn btn-primary" ng-click="loadRevenueLines(data)">Month Revenue Graph</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="hidden-xs col-xs-14  col-sm-14  col-md-14 col-lg-14 col-xl-14 parent">
+		<div class="graphDesc">{{graphHeader}}</div>
+		<div class="center-child graphCover">
+			<div class="absolute-wrapper">
+				<br><br><br>
+				&nbsp;Total Revenue : {{totalRevenue | currency:"&#x20B9; ":2}}
+				<br>
+				&nbsp;Total Nights : {{totalNights}}
+				<br>
+				&nbsp;ADR To Date : {{avgAdr | currency:"&#x20B9; ":2}}
+			</div>
+			<div id="magicBox" class="container" style="text-align:center">
+			</div>
+		</div>
+	</div>
+	<div class="hidden-xs col-xs-14  col-sm-14  col-md-14 col-lg-14 col-xl-14 parent">
+		<div class="graphDesc">LOYALTY SUMMARY</div>
+		<div class="graphCoverFloater">
+
+
+<!-- summary -->
+			<div class="table-responsive panel panel-default" style="width:100%" ng-class="{'boxShadow': productivitySummary.length > 0}">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr class="info">
+					<th class="">
+						<span class="link" ng-click="orderByField='booker'; ascendingSort = !ascendingSort">
+							<span>Month Year&nbsp;</span>
+							<span>
+								<span class="glyphicon glyphicon-sort"
+									ng-show="! (orderByField == 'label')"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet"
+									ng-show="orderByField == 'label' && ascendingSort"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+									ng-show="orderByField == 'label' && !ascendingSort"></span>
+							</span>
+						</span>
+					</th>
+					<th class="text-align-center">
+						<span class="link" ng-click="orderByField='adr'; ascendingSort = !ascendingSort">
+							<span>ADR&nbsp;</span>
+							<span>
+								<span class="glyphicon glyphicon-sort"
+									ng-show="! (orderByField == 'adr')"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet"
+									ng-show="orderByField == 'adr' && ascendingSort"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+									ng-show="orderByField == 'adr' && !ascendingSort"></span>
+							</span>
+						</span>
+					</th>
+					<th class="alignRight">
+						<span class="link" ng-click="orderByField='revenue'; ascendingSort = !ascendingSort">
+							<span>Revenue&nbsp;</span>
+							<span>
+								<span class="glyphicon glyphicon-sort"
+									ng-show="! (orderByField == 'revenue')"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet"
+									ng-show="orderByField == 'revenue' && ascendingSort"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+									ng-show="orderByField == 'revenue' && !ascendingSort"></span>
+							</span>
+						</span>
+					</th>
+					<th class="alignRight">
+						<span class="link" ng-click="orderByField='nights'; ascendingSort = !ascendingSort">
+							<span>Nights&nbsp;</span>
+							<span>
+								<span class="glyphicon glyphicon-sort"
+									ng-show="! (orderByField == 'nights')"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet"
+									ng-show="orderByField == 'nights' && ascendingSort"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet-alt"
+									ng-show="orderByField == 'nights' && !ascendingSort"></span>
+							</span>
+						</span>
+					</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr ng-show="data.length < 1"><td colspan="8" style="text-align:center">loading...</td></tr>
+					<tr ng-repeat="dataPoint in data | orderBy:orderByField:!ascendingSort | filter:search"
+						class="reservationRow link"
+						ng-click="showReservationDetail(reservation.resId)">
+						<td>{{dataPoint.label | cmdate:'MMM YYYY'}}</td>
+						<td class="text-align-center">{{dataPoint.adr | currency:"&#x20B9; ":2}}</td>
+						<td class="text-align-right">{{dataPoint.revenue | currency:"&#x20B9; ":2}}</td>
+						<td class="text-align-right">{{dataPoint.nights}}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+
+<!-- summary end -->
+
+		</div>
+	</div>
+
+</div>
